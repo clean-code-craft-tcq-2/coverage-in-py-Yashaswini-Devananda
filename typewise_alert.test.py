@@ -9,7 +9,7 @@ class TypewiseTest(unittest.TestCase):
             typewise_alert.battery["CoolingType"] = coolingType
 
             temperatureInC = typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1
-            typewise_alert.check_and_alert(alertTarget, battery, temperatureInC)
+            typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC)
 
 #             temperatureInC = cooling_type_list[coolingType].lowerlimit+0.1
 #             typewise_alert.check_and_alert(alertTarget, battery, temperatureInC)
