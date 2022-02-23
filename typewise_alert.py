@@ -31,7 +31,7 @@ def classify_temperature_breach(coolingType, temperatureInC):
           upperLimit = x.get("upperLimit")
   print (lowerLimit)   
   print (upperLimit)
-  return infer_breach(temperatureInC, lowerLimit, upperLimit)
+  return 'abc'#infer_breach(temperatureInC, lowerLimit, upperLimit)
 
 
 def check_and_alert(alertTarget, batteryChar, temperatureInC):
