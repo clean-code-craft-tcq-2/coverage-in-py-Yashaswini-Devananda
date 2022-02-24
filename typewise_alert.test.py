@@ -20,6 +20,7 @@ class TypewiseTest(unittest.TestCase):
             print (typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
             print (self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_LOW))
             self.assertTrue(typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC) == self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_LOW))
+            print ("$")
 
 
 if __name__ == '__main__':
