@@ -48,7 +48,7 @@ class TypewiseTest(unittest.TestCase):
     for alertTarget in range (typewise_alert.AlertTarget.AlertTarget_count):
         for coolingType in range (len(typewise_alert.CoolingType)):
             typewise_alert.battery["CoolingType"] = coolingType
-            run_test_cases(alertTarget, coolingType, typewise_alert.battery)
+            self.run_test_cases(alertTarget, coolingType, typewise_alert.battery)
 #             test_cases = [
 #                       {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1, "BreachType": typewise_alert.BreachType.TOO_LOW},
 #                       {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit+0.1, "BreachType": typewise_alert.BreachType.NORMAL},
