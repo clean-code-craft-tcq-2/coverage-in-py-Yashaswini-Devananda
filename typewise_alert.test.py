@@ -45,7 +45,7 @@ class TypewiseTest(unittest.TestCase):
         for coolingType in range (len(typewise_alert.CoolingType)):
             typewise_alert.battery["CoolingType"] = coolingType
            
-            for test_case in testcases:
+            for test_case in test_cases:
               actual_message = typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, test_case["temperatureInC"])
               self.assertTrue(self.generate_expected_message(alertTarget, test_case["BreachType"]) == actual_message)
       
