@@ -48,6 +48,8 @@ class TypewiseTest(unittest.TestCase):
             for test_case in test_cases:
               actual_message = typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, test_case["temperatureInC"])
               self.assertTrue(self.generate_expected_message(alertTarget, test_case["BreachType"]) == actual_message)
+              print (actual_message)
+              print (self.generate_expected_message(alertTarget, test_case["BreachType"]))
       
                             
 
