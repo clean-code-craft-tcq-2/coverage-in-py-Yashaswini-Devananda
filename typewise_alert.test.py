@@ -30,11 +30,17 @@ class TypewiseTest(unittest.TestCase):
             typewise_alert.battery["CoolingType"] = coolingType
 
             temperatureInC = typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1
-            print (typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
-            print (self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_LOW))
-            self.assertTrue(typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC) == self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_LOW))
+            self.assertTrue(self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_LOW)==\
+                            typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
+            
+            
             print ("$")
+#             print (typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
+#             print (self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_LOW))
 
 
 if __name__ == '__main__':
   unittest.main()
+  
+  
+  
