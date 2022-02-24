@@ -30,12 +30,13 @@ def send_to_controller(breachType):
 
 
 def send_to_email(breachType):
+    message = ""
     if breachType!=BreachType.NORMAL:
         recepient = "a.b@c.com"
         message = (f'To: {recepient}\n')
         message += f"{alerter_ref_strings[AlertTarget.TO_EMAIL]}{breach_ref_strings[breachType]}"
         # print(message)
-        return message
+    return message
 
 def infer_breach(breach):
     return (BreachType(breach).name)
