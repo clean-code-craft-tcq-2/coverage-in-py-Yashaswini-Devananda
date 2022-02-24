@@ -7,6 +7,7 @@ class TypewiseTest(unittest.TestCase):
     message = ""
     if alertTarget == typewise_alert.AlertTarget.TO_CONTROLLER:
         message = f'{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_CONTROLLER]}, {typewise_alert.infer_breach(breachType)}'
+        return message
     if breachType!=typewise_alert.BreachType.NORMAL and alertTarget == typewise_alert.AlertTarget.TO_EMAIL:
         recepient = "a.b@c.com"
         message = (f'To: {recepient}\n')
