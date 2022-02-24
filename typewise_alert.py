@@ -1,3 +1,5 @@
+import enum
+
 class Range:
     def __init__(self, **kwargs):
         self.lowerlimit = kwargs.get('lowerlimit', 0)
