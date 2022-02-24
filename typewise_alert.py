@@ -17,9 +17,8 @@ def check_and_alert(alertTarget, batteryChar , temperatureInC):
     breachType = cooling_type_list[batteryChar['CoolingType']].classify_breach(temperatureInC)
     if alertTarget == AlertTarget.TO_CONTROLLER:
         message = send_to_controller(breachType)
-    if breachType!=BreachType.NORMAL:
-        if alertTarget == AlertTarget.TO_EMAIL: # alerts 
-            message = send_to_email(breachType)
+    if alertTarget == AlertTarget.TO_EMAIL: # alerts 
+        message = send_to_email(breachType)
     return message
     
 
@@ -31,11 +30,12 @@ def send_to_controller(breachType):
 
 
 def send_to_email(breachType):
-    recepient = "a.b@c.com"
-    message = (f'To: {recepient}\n')
-    message += f"{alerter_ref_strings[AlertTarget.TO_EMAIL]}{breach_ref_strings[breachType]}"
-    # print(message)
-    return message
+    if breachType!=BreachType.NORMAL:
+        recepient = "a.b@c.com"
+        message = (f'To: {recepient}\n')
+        message += f"{alerter_ref_strings[AlertTarget.TO_EMAIL]}{breach_ref_strings[breachType]}"
+        # print(message)
+        return message
 
 def infer_breach(breach):
     return (BreachType(breach).name)
