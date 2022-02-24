@@ -32,6 +32,26 @@ class TypewiseTest(unittest.TestCase):
             temperatureInC = typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1
             self.assertTrue(self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_LOW)==\
                             typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
+
+            temperatureInC = typewise_alert.cooling_type_list[coolingType].lowerlimit+0.1
+            self.assertTrue(self.generate_expected_message(alertTarget, typewise_alert.BreachType.NORMAL)==\
+                            typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
+
+            temperatureInC = typewise_alert.cooling_type_list[coolingType].lowerlimit
+            self.assertTrue(self.generate_expected_message(alertTarget, typewise_alert.BreachType.NORMAL)==\
+                            typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
+
+            temperatureInC = typewise_alert.cooling_type_list[coolingType].upperlimit-0.1
+            self.assertTrue(self.generate_expected_message(alertTarget, typewise_alert.BreachType.NORMAL)==\
+                            typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
+
+            temperatureInC = typewise_alert.cooling_type_list[coolingType].upperlimit+0.1
+            self.assertTrue(self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_HIGH)==\
+                            typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
+
+            temperatureInC = typewise_alert.cooling_type_list[coolingType].upperlimit
+            self.assertTrue(self.generate_expected_message(alertTarget, typewise_alert.BreachType.NORMAL)==\
+                            typewise_alert.check_and_alert(alertTarget, typewise_alert.battery, temperatureInC))
             
             
             print ("$")
