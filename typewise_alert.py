@@ -1,46 +1,68 @@
+import enum
 
-def infer_breach(value, lowerLimit, upperLimit):
-  if value < lowerLimit:
-    return 'TOO_LOW'
-  if value > upperLimit:
-    return 'TOO_HIGH'
-  return 'NORMAL'
+class Range:
+    def __init__(self, **kwargs):
+        self.lowerlimit = kwargs.get('lowerlimit', 0)
+        self.upperlimit = kwargs.get('upperlimit', 0)
+        
+    def classify_breach(self, parameter_value): #classify breach check
+        if parameter_value < self.lowerlimit:
+            return BreachType.TOO_LOW
+        elif parameter_value > self.upperlimit:
+            return BreachType.TOO_HIGH
+        return BreachType.NORMAL
 
-
-def classify_temperature_breach(coolingType, temperatureInC):
-  lowerLimit = 0
-  upperLimit = 0
-  if coolingType == 'PASSIVE_COOLING':
-    lowerLimit = 0
-    upperLimit = 35
-  elif coolingType == 'HI_ACTIVE_COOLING':
-    lowerLimit = 0
-    upperLimit = 45
-  elif coolingType == 'MED_ACTIVE_COOLING':
-    lowerLimit = 0
-    upperLimit = 40
-  return infer_breach(temperatureInC, lowerLimit, upperLimit)
-
-
-def check_and_alert(alertTarget, batteryChar, temperatureInC):
-  breachType =\
-    classify_temperature_breach(batteryChar['coolingType'], temperatureInC)
-  if alertTarget == 'TO_CONTROLLER':
-    send_to_controller(breachType)
-  elif alertTarget == 'TO_EMAIL':
-    send_to_email(breachType)
-
+def check_and_alert(alertTarget, batteryChar , temperatureInC):
+    message = ""
+    breachType = cooling_type_list[batteryChar['CoolingType']].classify_breach(temperatureInC)
+    if alertTarget == AlertTarget.TO_CONTROLLER:
+        message = send_to_controller(breachType)
+    if alertTarget == AlertTarget.TO_EMAIL: # alerts 
+        message = send_to_email(breachType)
+    return message
+    
 
 def send_to_controller(breachType):
-  header = 0xfeed
-  print(f'{header}, {breachType}')
+    header = alerter_ref_strings[AlertTarget.TO_CONTROLLER]
+    message = f'{header}, {infer_breach(breachType)}'
+    # print(message)
+    return message
 
 
 def send_to_email(breachType):
-  recepient = "a.b@c.com"
-  if breachType == 'TOO_LOW':
-    print(f'To: {recepient}')
-    print('Hi, the temperature is too low')
-  elif breachType == 'TOO_HIGH':
-    print(f'To: {recepient}')
-    print('Hi, the temperature is too high')
+    message = ""
+    if breachType!=BreachType.NORMAL:
+        recepient = "a.b@c.com"
+        message = (f'To: {recepient}\n')
+        message += f"{alerter_ref_strings[AlertTarget.TO_EMAIL]}{breach_ref_strings[breachType]}"
+        # print(message)
+    return message
+
+def infer_breach(breach):
+    return (BreachType(breach).name)
+    
+cooling_type_list = []
+cooling_type_list.append(Range(lowerlimit = 0, upperlimit = 35)) # PASSIVE_COOLING
+cooling_type_list.append(Range(lowerlimit = 0, upperlimit = 45)) # HI_ACTIVE_COOLING
+cooling_type_list.append(Range(lowerlimit = 0, upperlimit = 40)) # MED_ACTIVE_COOLING
+
+
+    
+class AlertTarget(enum.IntEnum):
+    TO_CONTROLLER = 0
+    TO_EMAIL = 1
+    AlertTarget_count = 2
+    
+alerter_ref_strings = ["Header","Hi, the temperature is "]
+breach_ref_strings = ["too low","too high"]
+
+CoolingType = {"PASSIVE_COOLING" : 0, "HI_ACTIVE_COOLING" : 1, "MED_ACTIVE_COOLING" : 2 } #look up cooling type
+
+
+battery = {"CoolingType" : CoolingType["PASSIVE_COOLING"] }
+
+class BreachType(enum.IntEnum):
+    TOO_LOW = 0
+    TOO_HIGH = 1
+    NORMAL = 2
+    BreachType_Count = 3
