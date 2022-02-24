@@ -8,7 +8,9 @@ class TypewiseTest(unittest.TestCase):
     if alertTarget == typewise_alert.AlertTarget.TO_CONTROLLER:
         message = f'{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_CONTROLLER]}, {typewise_alert.infer_breach(breachType)}'
     if breachType!=typewise_alert.BreachType.NORMAL and alertTarget == typewise_alert.AlertTarget.TO_EMAIL:
-        message = f"{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_EMAIL]}{typewise_alert.breach_ref_strings[breachType]}"
+        recepient = "a.b@c.com"
+        message = (f'To: {recepient}\n')
+        message += f"{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_EMAIL]}{typewise_alert.breach_ref_strings[breachType]}"
     return message
   
   def test_infers_breach_as_per_limits(self):
