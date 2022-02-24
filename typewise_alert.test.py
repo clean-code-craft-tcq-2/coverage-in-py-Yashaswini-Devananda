@@ -24,6 +24,8 @@ class TypewiseTest(unittest.TestCase):
         message = self.generate_email_message(alertTarget, breachType)
     return message
   
+  coolingType = 0
+  
   test_cases = [
                 {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1, "BreachType": typewise_alert.BreachType.TOO_LOW},
                 {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit+0.1, "BreachType": typewise_alert.BreachType.NORMAL},
