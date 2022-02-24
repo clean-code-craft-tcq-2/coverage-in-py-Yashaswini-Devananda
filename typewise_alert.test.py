@@ -1,6 +1,16 @@
 import unittest
 import typewise_alert
 
+coolingType = 0
+  
+test_cases = [
+              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1, "BreachType": typewise_alert.BreachType.TOO_LOW},
+              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit+0.1, "BreachType": typewise_alert.BreachType.NORMAL},
+              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit, "BreachType": typewise_alert.BreachType.NORMAL},
+              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].upperlimit-0.1, "BreachType": typewise_alert.BreachType.NORMAL},
+              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].upperlimit+0.1, "BreachType": typewise_alert.BreachType.TOO_HIGH},
+              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].upperlimit, "BreachType": typewise_alert.BreachType.NORMAL},
+             ]
 
 class TypewiseTest(unittest.TestCase):
   def generate_controller_message(self,alertTarget, breachType):
@@ -23,17 +33,6 @@ class TypewiseTest(unittest.TestCase):
     if alertTarget == typewise_alert.AlertTarget.TO_EMAIL:
         message = self.generate_email_message(alertTarget, breachType)
     return message
-  
-coolingType = 0
-  
-test_cases = [
-              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1, "BreachType": typewise_alert.BreachType.TOO_LOW},
-              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit+0.1, "BreachType": typewise_alert.BreachType.NORMAL},
-              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit, "BreachType": typewise_alert.BreachType.NORMAL},
-              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].upperlimit-0.1, "BreachType": typewise_alert.BreachType.NORMAL},
-              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].upperlimit+0.1, "BreachType": typewise_alert.BreachType.TOO_HIGH},
-              {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].upperlimit, "BreachType": typewise_alert.BreachType.NORMAL},
-             ]
   
 #   def test_condition(alertTarget, battery):
 #     temperatureInC = typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1
