@@ -3,15 +3,25 @@ import typewise_alert
 
 
 class TypewiseTest(unittest.TestCase):
+  def generate_controller_message(self,alertTarget, breachType):
+    message = f'{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_CONTROLLER]}, {typewise_alert.infer_breach(breachType)}'
+    return message
+    
+  def generate_email_message(self,alertTarget, breachType):
+    message = ""
+    if breachType!=typewise_alert.BreachType.NORMAL:
+      recepient = "a.b@c.com"
+      message = (f'To: {recepient}\n')
+      message += f"{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_EMAIL]}{typewise_alert.breach_ref_strings[breachType]}"
+    return message
+  
   def generate_expected_message(self,alertTarget, breachType):
     message = ""
     if alertTarget == typewise_alert.AlertTarget.TO_CONTROLLER:
-        message = f'{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_CONTROLLER]}, {typewise_alert.infer_breach(breachType)}'
+        message = self.generate_controller_message(alertTarget, breachType)
         return message
-    if breachType!=typewise_alert.BreachType.NORMAL and alertTarget == typewise_alert.AlertTarget.TO_EMAIL:
-        recepient = "a.b@c.com"
-        message = (f'To: {recepient}\n')
-        message += f"{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_EMAIL]}{typewise_alert.breach_ref_strings[breachType]}"
+    if alertTarget == typewise_alert.AlertTarget.TO_EMAIL:
+        message = self.generate_email_message(alertTarget, breachType)
     return message
   
   def test_infers_breach_as_per_limits(self):
