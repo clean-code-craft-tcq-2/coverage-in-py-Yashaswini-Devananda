@@ -3,11 +3,11 @@ import typewise_alert
 
 
 class TypewiseTest(unittest.TestCase):
-  def generate_expected_message(alertTarget, breachType):
+  def generate_expected_message(self,alertTarget, breachType):
     message = ""
     if alertTarget == typewise_alert.AlertTarget.TO_CONTROLLER:
         message = f'{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_CONTROLLER]}, {typewise_alert.infer_breach(breachType)}'
-    elif breachType!=typewise_alert.BreachType.NORMAL and alertTarget == typewise_alert.AlertTarget.TO_EMAIL:
+    if breachType!=typewise_alert.BreachType.NORMAL and alertTarget == typewise_alert.AlertTarget.TO_EMAIL:
         message = f"{typewise_alert.alerter_ref_strings[typewise_alert.AlertTarget.TO_EMAIL]}{typewise_alert.breach_ref_strings[breachType]}"
     return message
   
