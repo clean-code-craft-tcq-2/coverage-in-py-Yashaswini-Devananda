@@ -28,7 +28,7 @@ class TypewiseTest(unittest.TestCase):
 #     actual_message = typewise_alert.check_and_alert(alertTarget, battery, temperatureInC)
 #     self.assertTrue(self.generate_expected_message(alertTarget, typewise_alert.BreachType.TOO_LOW)==actual_message)
 
-  def run_test_cases(alertTarget, battery):
+  def run_test_cases(alertTarget, coolingType, battery):
     test_cases = [
               {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1, "BreachType": typewise_alert.BreachType.TOO_LOW},
               {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit+0.1, "BreachType": typewise_alert.BreachType.NORMAL},
@@ -48,7 +48,7 @@ class TypewiseTest(unittest.TestCase):
     for alertTarget in range (typewise_alert.AlertTarget.AlertTarget_count):
         for coolingType in range (len(typewise_alert.CoolingType)):
             typewise_alert.battery["CoolingType"] = coolingType
-            run_test_cases(alertTarget,typewise_alert.battery)
+            run_test_cases(alertTarget, coolingType, typewise_alert.battery)
 #             test_cases = [
 #                       {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit-0.1, "BreachType": typewise_alert.BreachType.TOO_LOW},
 #                       {"temperatureInC" : typewise_alert.cooling_type_list[coolingType].lowerlimit+0.1, "BreachType": typewise_alert.BreachType.NORMAL},
